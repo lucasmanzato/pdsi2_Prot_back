@@ -15,10 +15,9 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: lucas2002
           POSTGRES_DB: pdsi_prot
-          DB_HOST: localhost
         ports:
           - 5432:5432
-
+          
     steps:
       - name: pulling git repo
         uses: actions/checkout@v2
