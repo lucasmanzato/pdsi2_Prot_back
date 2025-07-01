@@ -8,6 +8,16 @@ jobs:
   job1:
     runs-on: ubuntu-latest
     
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: lucas2002
+          POSTGRES_DB: pdsi_prot
+        ports:
+          - 5432:5432
+          
     steps:
       - name: pulling git repo
         uses: actions/checkout@v2
@@ -23,5 +33,13 @@ jobs:
       - name: instalar dependencias
         run: pip install -r requirements.txt
 
+      - name: Esperando o PostgreSQL ficar pronto
+        run: sleep 15
+
       - name: Executar pytest
+        env:
+          DB_USER: postgres
+          DB_PASSWORD: lucas2002
+          DB_DATABASE: pdsi_prot
+          DB_HOST: localhost
         run: pytest teste.py
