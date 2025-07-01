@@ -12,9 +12,10 @@ jobs:
       postgres:
         image: postgres:13
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: lucas2002
-          POSTGRES_DB: pdsi_prot
+          env:
+          POSTGRES_USER: ${{ secrets.DB_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.DB_DATABASE }}
         ports:
           - 5432:5432
           
@@ -38,8 +39,8 @@ jobs:
 
       - name: Executar pytest
         env:
-          DB_USER: postgres
-          DB_PASSWORD: lucas2002
-          DB_DATABASE: pdsi_prot
-          DB_HOST: localhost
+          POSTGRES_USER: ${{ secrets.DB_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.DB_DATABASE }}
+          DB_HOST: ${{secrets.DB_HOST }}
         run: pytest teste.py
