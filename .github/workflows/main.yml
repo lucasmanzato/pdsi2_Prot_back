@@ -12,7 +12,7 @@ jobs:
       postgres:
         image: postgres:13
         env:
-          env:
+          # Variáveis para inicializar o contêiner do Postgres
           POSTGRES_USER: ${{ secrets.DB_USER }}
           POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
           POSTGRES_DB: ${{ secrets.DB_DATABASE }}
@@ -39,8 +39,10 @@ jobs:
 
       - name: Executar pytest
         env:
-          POSTGRES_USER: ${{ secrets.DB_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          POSTGRES_DB: ${{ secrets.DB_DATABASE }}
-          DB_HOST: ${{secrets.DB_HOST }}
+          # Variáveis para o código Python usar durante os testes
+          # Os nomes devem ser os mesmos que os.getenv() espera
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_DATABASE: ${{ secrets.DB_DATABASE }}
+          DB_HOST: localhost  # <-- O host é sempre localhost aqui
         run: pytest teste.py
